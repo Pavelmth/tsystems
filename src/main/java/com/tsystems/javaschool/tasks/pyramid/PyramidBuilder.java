@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.tasks.pyramid;
 
+import java.util.Collections;
 import java.util.List;
 
 public class PyramidBuilder {
@@ -14,8 +15,30 @@ public class PyramidBuilder {
      */
     public int[][] buildPyramid(List<Integer> inputNumbers) {
         // TODO : Implement your solution here
-        return new int[0][0];
+
+        //определяем высоту пирамиды
+        double height = (Math.sqrt(8 * inputNumbers.size() + 1) - 1) / 2;
+
+        //проверяем валидность высоты
+        if (Double.isNaN(height) || height % 1 > 0.0 || height == 1 || inputNumbers.stream().anyMatch(item -> (item == null))) {
+            throw new CannotBuildPyramidException();
+        };
+
+        //Создаем двухмерный массив
+        int[][] arr = new int[(int) height][(int) (2 * height - 1)];
+
+        //сортируем список для заполнения
+        Collections.sort(inputNumbers);
+
+        //заполняем массив
+        int n = 0;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < i + 1 ; j++) {
+                arr[i][arr.length - 1 - i + (2 * j)] = inputNumbers.get(n);
+                n++;
+            }
+        }
+        
+        return arr;
     }
-
-
 }
