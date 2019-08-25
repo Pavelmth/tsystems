@@ -38,7 +38,7 @@ public class PyramidBuilder {
                 n++;
             }
         }
-        
+
         return arr;
     }
 }
